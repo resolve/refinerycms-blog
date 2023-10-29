@@ -1,8 +1,8 @@
-# Refinery CMS Blog
+# Refinery CMS Blog [![Build Status](https://travis-ci.org/refinery/refinerycms-blog.svg?branch=master)](https://travis-ci.org/refinery/refinerycms-blog)
 
 Simple blog engine for [Refinery CMS](http://refinerycms.com). It supports posts, categories and comments.
 
-This version of `refinerycms-blog` supports Rails 3.2.x. To use Rails 2.3.x use the [refinerycms-blog "Rails 2.3.x stable branch"](http://github.com/resolve/refinerycms-blog/tree/rails2-stable).
+This version of `refinerycms-blog` supports Refinery 4.x and Rails 5.1.x (Ruby 2.2+). To use Rails 4.x / Refinery 3.1.x / Ruby 2.1 or older use the [refinerycms-blog "Refinery CMS 3-0 stable branch"](http://github.com/refinery/refinerycms-blog/tree/3-0-stable).
 
 Options:
 
@@ -11,15 +11,18 @@ Options:
 
 ## Requirements
 
-Refinery CMS version 2.0.1 or above.
+Refinery CMS version 4.0.0 or above (Ruby 2.2 or above).
 
 ## Install
 
-Open up your ``Gemfile`` and add at the bottom this line:
+Open up your ``Gemfile`` and at the bottom, add this line:
+
 
 ```ruby
-gem 'refinerycms-blog', '~> 2.0.0'
+gem 'refinerycms-blog', git: 'https://github.com/refinery/refinerycms-blog', branch: 'master'
 ```
+
+Note: if the [refinerycms-page-images](https://github.com/refinery/refinerycms-page-images) extension is also installed, make sure `gem refinerycms-blog` comes before `gem 'refinerycms-page-images'`.
 
 Now, run ``bundle install``
 
@@ -34,6 +37,18 @@ Run database migrations:
 Finally seed your database and you're done.
 
     rake db:seed
+
+## Visual Editor
+
+By default, this extension does not require any particular visual editor.
+Previously, Refinery was coupled to WYMeditor but this has been extracted to an
+extension, [refinerycms-wymeditor](https://github.com/parndt/refinerycms-wymeditor).
+
+If you want to use `refinerycms-wymeditor`, simply place it in your Gemfile:
+
+```ruby
+gem 'refinerycms-wymeditor', ['~> 1.0', '>= 1.0.6']
+```
 
 ## Developing & Contributing
 
@@ -52,6 +67,11 @@ Run the test suite with [Guard](https://github.com/guard/guard)
 Or just with rake spec
 
     $ bundle exec rake spec
+
+## Additional Features
+* To limit rss feed length, use the 'max_results' parameter
+
+    http://test.host/blog/feed.rss?max_results=10
 
 ## More Information
 * Check out our [Website](http://refinerycms.com/)

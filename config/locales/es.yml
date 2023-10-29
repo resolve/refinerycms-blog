@@ -35,9 +35,7 @@ es:
             approve: Aprovar este comentario
         posts:
           form:
-            advanced_options: Opciones avanzadas
             toggle_advanced_options: Click para acceder a las opciones de menú y etiquetas
-            save_as_draft: Guardar Borrador
             published_at: Fecha de publicación
           index:
             no_items_yet: 'Aún no hay entradas en el Blog. Haz click en "%{create}" para añadir el primero'
@@ -106,7 +104,7 @@ es:
           no_posts: Todavía no hay entradas.
       posts:
         post:
-          filed_in: Archivado en
+          filled_in: Archivado en
         comment: comentario
         comments:
           by: 'Enviado por %{who}'
@@ -121,7 +119,7 @@ es:
             title: Comentarios
             add: 'Envía tu comentario'
           other: Otros posts
-          filed_in: Archivado en
+          filled_in: Archivado en
           submit: Enviar comentario
         archive:
           blog_archive_for: 'Archivo del blog en %{date}'

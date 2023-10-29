@@ -1,7 +1,7 @@
-class CreateBlogStructure < ActiveRecord::Migration
+class CreateBlogStructure < ActiveRecord::Migration[4.2]
 
   def up
-    create_table Refinery::Blog::Post.table_name, :id => true do |t|
+    create_table :refinery_blog_posts do |t|
       t.string :title
       t.text :body
       t.boolean :draft
@@ -9,9 +9,9 @@ class CreateBlogStructure < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index Refinery::Blog::Post.table_name, :id
+    add_index :refinery_blog_posts, :id
 
-    create_table Refinery::Blog::Comment.table_name, :id => true do |t|
+    create_table :refinery_blog_comments do |t|
       t.integer :blog_post_id
       t.boolean :spam
       t.string :name
@@ -21,32 +21,33 @@ class CreateBlogStructure < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index Refinery::Blog::Comment.table_name, :id
+    add_index :refinery_blog_comments, :id
+    add_index :refinery_blog_comments, :blog_post_id
 
-    create_table Refinery::Blog::Category.table_name, :id => true do |t|
+    create_table :refinery_blog_categories do |t|
       t.string :title
       t.timestamps
     end
 
-    add_index Refinery::Blog::Category.table_name, :id
+    add_index :refinery_blog_categories, :id
 
-    create_table Refinery::Categorization.table_name, :id => true do |t|
+    create_table :refinery_blog_categories_blog_posts do |t|
       t.integer :blog_category_id
       t.integer :blog_post_id
     end
 
-    add_index Refinery::Categorization.table_name, [:blog_category_id, :blog_post_id], :name => 'index_blog_categories_blog_posts_on_bc_and_bp'
+    add_index :refinery_blog_categories_blog_posts, [:blog_category_id, :blog_post_id], :name => 'index_blog_categories_blog_posts_on_bc_and_bp'
   end
 
   def down
-    Refinery::UserPlugin.destroy_all({:name => "refinerycms_blog"})
+    Refinery::UserPlugin.destroy_all({:name => "refinerycms_blog"}) if defined?(Refinery::UserPlugin)
 
-    Refinery::Page.delete_all({:link_url => "/blog"})
+    Refinery::Page.delete_all({:link_url => "/blog"}) if defined?(Refinery::Page)
 
-    drop_table Refinery::Blog::Post.table_name
-    drop_table Refinery::Blog::Comment.table_name
-    drop_table Refinery::Blog::Category.table_name
-    drop_table Refinery::Categorization.table_name
+    drop_table :refinery_blog_posts
+    drop_table :refinery_blog_comments
+    drop_table :refinery_blog_categories
+    drop_table :refinery_blog_categories_blog_posts
   end
 
 end

@@ -3,29 +3,22 @@
              :object => f.object,
              :include_object_name => true %>
 
-  <%= render "/refinery/blog/admin/shared/locale_picker",
-              :current_locale => Thread.current[:globalize_locale] if Refinery.i18n_enabled? %>
+  <%= render '/refinery/admin/locale_picker',
+              :current_locale => Globalize.locale %>
 
   <div class='field'>
     <%= f.label :title -%>
     <%= f.text_field :title, :class => 'larger widest' -%>
-  </div>
-  
-  <div class="field">
-    <p>
-      <%= f.check_box :draft %>
-      <%= f.label :draft, t('.save_as_draft'), :class => "stripped" %>
-    </p>
   </div>
 
   <div class='field'>
     <div id='page-tabs' class='clearfix ui-tabs ui-widget ui-widget-content ui-corner-all'>
       <ul id='page_parts'>
         <li class='ui-state-default ui-state-active'>
-          <%= link_to t('body', :scope => 'activerecord.attributes.refinery/blog_post'), "#page_part_body" %>
+          <%= link_to t('body', :scope => 'activerecord.attributes.refinery/blog/post'), "#page_part_body" %>
         </li>
         <li class='ui-state-default'>
-          <%= link_to t('teaser', :scope => 'activerecord.attributes.refinery/blog_post'), "#page_part_teaser" %>
+          <%= link_to t('teaser', :scope => 'activerecord.attributes.refinery/blog/post'), "#page_part_teaser" %>
         </li>
         <% Refinery::Blog.tabs.each_with_index do |tab, tab_index| %>
           <li class='ui-state-default' id="custom_<%= tab.name %>_tab">
@@ -49,17 +42,12 @@
 
   <div class='field'>
     <%= f.label :tag_list, t('refinery.blog.shared.tags.title') -%>
-    <%= f.text_field :tag_list, :class => 'larger' -%>
+    <%= f.text_field :tag_list, value: @post.tag_list.to_s, :class => 'larger' -%>
   </div>
 
-  <div id='more_options_field'>
-    <p>
-      <%= link_to t('.advanced_options'), "#",
-                  :id => 'toggle_advanced_options',
-                  :title => t('.toggle_advanced_options') %>
-    </p>
-  </div>
-  <div id='more_options' style="display:none;">
+  <%= render '/refinery/admin/form_advanced_options_menu', :f => f %>
+
+  <div id='more_options'>
     <div class="hemisquare">
       <h3><%= t('title', :scope => 'refinery.blog.admin.submenu.categories') %></h3>
       <ul class='blog_categories'>
@@ -106,7 +94,11 @@
           <%= f.label :user_id, t('.author') %>
           <%= refinery_help_tag t('.author_help') %>
           <br/>
-          <%= f.collection_select :user_id, ::Refinery::User.all, :id, :username %>
+          <% if @authors.present? %>
+            <%= f.collection_select :user_id, @authors, :id, :username %>
+          <% else %>
+            <%= f.text_field :username, id: :post_user_id, :class => "widest" %>
+          <% end %>
         </span>
       </div>
 
@@ -118,11 +110,18 @@
   <%= render "/refinery/admin/form_actions",
              :f => f,
              :continue_editing => true,
-             :delete_title => t('delete', :scope => 'refinery.blog.admin.posts.post') %>
+             :delete_title => t('delete', :scope => 'refinery.blog.admin.posts.post'),
+             :before_delete_button => (link_to(t('delete_translation', :scope => 'refinery.blog.admin.posts.post'),
+                                               refinery.delete_translation_blog_admin_post_path(@post, :locale_to_delete => Globalize.locale),
+                                               :method => :post,
+                                               :data => {
+                                                 :confirm => t('delete_translation_confirmation', :scope => 'refinery.blog.admin.posts.post')
+                                               },
+                                               :class => "button confirm-delete") if Refinery::I18n.frontend_locales.many? && @post.translations.size > 1) %>
 <% end -%>
 
 <% content_for :stylesheets, stylesheet_link_tag('refinery/blog/backend') %>
 <% content_for :javascripts, javascript_include_tag('refinery/blog/backend') %>
 <%= render 'refinery/shared/admin/autocomplete',
-           :dom_id => '#blog_post_tag_list',
+           :dom_id => '#post_tag_list',
            :url => refinery.tags_blog_admin_posts_url %>

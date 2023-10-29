@@ -4,13 +4,16 @@ module Refinery
       class PostsController < ::Refinery::AdminController
 
         crudify :'refinery/blog/post',
-                :order => 'published_at DESC',
-                :include => [:translations]
+                order: 'published_at DESC',
+                include: [:translations, :author]
 
-        before_filter :find_all_categories,
-                      :only => [:new, :edit, :create, :update]
+        before_action :find_all_categories,
+                      only: [:new, :edit, :create, :update]
 
-        before_filter :check_category_ids, :only => :update
+        before_action :find_all_authors,
+                      only: [:new, :edit, :create, :update]
+
+        before_action :check_category_ids, only: :update
 
         def uncategorized
           @posts = Refinery::Blog::Post.uncategorized.page(params[:page])
@@ -31,19 +34,15 @@ module Refinery
           render :json => @tags.flatten
         end
 
-        def new
-          @post = ::Refinery::Blog::Post.new(:author => current_refinery_user)
-        end
-
         def create
           # if the position field exists, set this object as last object, given the conditions of this class.
           if Refinery::Blog::Post.column_names.include?("position")
-            params[:post].merge!({
+            post_params.merge!({
               :position => ((Refinery::Blog::Post.maximum(:position, :conditions => "")||-1) + 1)
             })
           end
 
-          if (@post = Refinery::Blog::Post.create(params[:post])).valid?
+          if (@post = Refinery::Blog::Post.create(post_params)).valid?
             (request.xhr? ? flash.now : flash).notice = t(
               'refinery.crudify.created',
               :what => "'#{@post.title}'"
@@ -75,13 +74,39 @@ module Refinery
           end
         end
 
+        def delete_translation
+          find_post
+          @post.translations.find_by_locale(params[:locale_to_delete]).destroy
+          flash[:notice] = ::I18n.t('delete_translation_success', :scope => 'refinery.blog.admin.posts.post')
+          redirect_to refinery.blog_admin_posts_path
+        end
+
+      private
+
+        def post_params
+          params.require(:post).permit(permitted_post_params)
+        end
+
+        def permitted_post_params
+          [
+            :title, :body, :custom_teaser, :tag_list,
+            :draft, :published_at, :custom_url, :user_id, :username, :browser_title,
+            :meta_description, :source_url, :source_url_title, :category_ids => []
+          ]
+        end
+
       protected
+
         def find_post
-          @post = Refinery::Blog::Post.find_by_slug_or_id(params[:id])
+          @post = Refinery::Blog::Post.friendly.joins(:translations).find(params[:id])
         end
 
         def find_all_categories
-          @categories = Refinery::Blog::Category.find(:all)
+          @categories = Refinery::Blog::Category.all
+        end
+
+        def find_all_authors
+          @authors = Refinery::Blog.user_class.all if (!Refinery::Blog.user_class.nil? && Refinery::Blog.user_class.column_names.include?('username'))
         end
 
         def check_category_ids

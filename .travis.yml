@@ -1,20 +1,14 @@
-before_script:
-  - "bundle exec rake refinery:testing:dummy_app > /dev/null"
-script: "bundle exec rake spec"
-notifications:
-  email:
-    - parndt@gmail.com
-    - ugis.ozolss@gmail.com
-    - joe@joesak.com
-    - jamie@enmasse.com
+language: ruby
+cache: bundler
+bundler_args: --without development
+before_script: "bundle exec rake refinery:testing:dummy_app"
 env:
   - DB=postgresql
   - DB=mysql
-matrix:
-  allow_failures:
-    - rvm: rbx-19mode
+notifications:
+  webhooks:
+    - https://webhooks.gitter.im/e/b5d48907cdc89864b874
 rvm:
-  - 1.8.7
-  - 1.9.3
-  - rbx-19mode
-  - jruby
+  - 2.3.1
+  - 2.2
+sudo: false

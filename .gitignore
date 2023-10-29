@@ -46,9 +46,14 @@ capybara-*html
 
 # rvm
 .rvmrc
+.ruby-version
+.ruby-gemset
 
 #rbenv
 .rbenv-version
 
 Gemfile.lock
 .rbx
+
+# Local Gemfile for developing without sharing dependencies
+.gemfile

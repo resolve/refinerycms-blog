@@ -14,7 +14,7 @@ pl:
         comments:
           approved: 'Komentarz "%{author}" został zaakceptowany.'
           comment:
-            view_live: 'Zobacz ten komentarz na żywo<br/><em>(otwiera w nowym oknie)</em>'
+            view_live_html: 'Zobacz ten komentarz na żywo<br/><em>(otwiera w nowym oknie)</em>'
             read: Pokaż ten komentarz
             reject: Odrzuć ten komentarz
             approve: Zaakceptuj ten komentarz
@@ -35,16 +35,14 @@ pl:
             approve: Zaakceptuj ten komentarz
         posts:
           form:
-            advanced_options: Opcje zaawansowane
             toggle_advanced_options: 'Kliknij, aby zarządzać meta-ustawieniami'
-            save_as_draft: Zapisz jako szkic
             published_at: Data publikacji
           index:
             no_items_yet: 'Na blogu nie ma jeszcze żadnych wpisów. Kliknij "%{create}" aby dodać pierwszy post.'
           uncategorized:
             no_items_yet: 'Brak nieskategoryzowanych wpisów na blogu.'
           post:
-            view_live: 'Zobacz ten post na żywo<br/><em>(otwiera w nowym oknie)</em>'
+            view_live_html: 'Zobacz ten post na żywo<br/><em>(otwiera w nowym oknie)</em>'
             edit: Edytuj ten post
             delete: Usuń ten post na zawsze
         settings:
@@ -106,7 +104,7 @@ pl:
           no_posts: Nie ma jeszcze żadnych postów.
       posts:
         post:
-          filed_in: 'kategorie:'
+          filled_in: 'kategorie:'
         comment: komentarz
         comments:
           by: 'Autor: %{who}'
@@ -116,12 +114,12 @@ pl:
         index:
           no_blog_articles_yet: W tej chwili nie ma jeszcze żadnych postów. Cierpliwości:)
         show:
-          blog_home: Blog 
+          blog_home: Blog
           comments:
             title: Komentarze
             add: Dodaj komentarz
           other: Pozostałe wpisy
-          filed_in: 'kategorie:'
+          filled_in: 'kategorie:'
           submit: Dodaj komentarz
         archive:
           blog_archive_for: 'Archiwum dla %{date}'

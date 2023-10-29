@@ -2,9 +2,16 @@ module Refinery
   module Blog
     class CategoriesController < BlogController
 
-      def show
-        @category = Refinery::Blog::Category.find(params[:id])
-        @posts = @category.posts.live.includes(:comments, :categories).with_globalize.page(params[:page])
+      before_action :find_category, :find_all_blog_posts, only: :show
+
+      private
+
+      def find_category
+        @category = Refinery::Blog::Category.friendly.find(params[:id])
+      end
+
+      def post_finder_scope
+        @category.posts
       end
 
     end

@@ -35,9 +35,7 @@ en:
             approve: Approve this comment
         posts:
           form:
-            advanced_options: Advanced Options
             toggle_advanced_options: Click to access meta tag settings and menu options
-            save_as_draft: Save as Draft
             published_at: Publish Date
             custom_url: Custom Url
             custom_url_help: Generate the url for the blog post from this text instead of the title.
@@ -57,6 +55,9 @@ en:
             view_live_html: 'View this blog post live <br/><em>(opens in a new window)</em>'
             edit: Edit this blog post
             delete: Remove this blog post forever
+            delete_translation: Remove this translation
+            delete_translation_confirmation: Are you sure you want to remove this translation forever ?
+            delete_translation_success: The translation was successfully removed.
             draft: Draft
         settings:
           notification_recipients:
@@ -97,6 +98,10 @@ en:
           from: From
           email: Email
           message: Message
+          approve: Approve
+          or: " or "
+          reject: reject
+          this_comment: " this comment."
           closing_line: Kind Regards
           ps: 'P.S. All your comments are stored in the "Blog" section of Refinery under the "Comments" submenu should you ever want to view it there later.'
       shared:
@@ -106,7 +111,7 @@ en:
           title: RSS Feed
           subscribe: Subscribe
         posts:
-          other: Other Posts
+          other: Latest Posts
           created_at: 'Posted on %{when}'
           read_more: Read more
         comments:
@@ -120,7 +125,7 @@ en:
           no_posts: There are no posts here yet.
       posts:
         post:
-          filed_in: Filed in
+          filled_in: Filed in
         comment: comment
         comments:
           by: 'Posted by %{who}'
@@ -134,8 +139,8 @@ en:
           comments:
             title: Comments
             add: Make a Comment
-          other: Other Blog Posts
-          filed_in: Filed in
+          other: Latest Blog Posts
+          filled_in: Filed in
           tagged: Tagged
           submit: Send comment
           name: Name

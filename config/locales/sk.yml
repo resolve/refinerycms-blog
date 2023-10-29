@@ -35,9 +35,7 @@ sk:
             approve: Schváliť komentár
         posts:
           form:
-            advanced_options: Pokročilé nastavenia
             toggle_advanced_options: Klikni pre prístup k nastaveniam meta tagov a menu
-            save_as_draft: Uložiť ako koncept
             published_at: Dátum publikovania
             custom_url: Vlastná url
             custom_url_help: Generovať url pre blog článok z tohto textu namiesto názvu blog článku.
@@ -52,7 +50,7 @@ sk:
           index:
             no_items_yet: 'Nie sú žiadne blog články. Klikni na "%{create}" pre pridanie prvého.'
           uncategorized:
-            no_items_yet: 'Nie sú žiadne nezradené články.'
+            no_items_yet: 'Nie sú žiadne nezaradené články.'
           post:
             view_live_html: 'Zobraziť živý náhľad článku<br/><em>(otvorí sa v novom okne)</em>'
             edit: Upraviť článok
@@ -122,7 +120,7 @@ sk:
           no_posts: Momentálne tu nie sú žiadne články.
       posts:
         post:
-          filed_in: Zaradené do
+          filled_in: Zaradené do
         comment: komentár
         comments:
           by: 'Odoslal %{who}'
@@ -137,7 +135,7 @@ sk:
             title: Komentáre
             add: Pridať komentár
           other: Ďalšie články
-          filed_in: Zaradené do
+          filled_in: Zaradené do
           submit: Odoslať komentár
           name: Meno
           email: E-mail

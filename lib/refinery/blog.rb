@@ -1,8 +1,10 @@
 require 'refinerycms-core'
 require 'refinerycms-settings'
-require 'filters_spam'
 require 'rails_autolink'
-require 'acts_as_indexed'
+require 'friendly_id'
+require 'jquery-ui-rails'
+require 'globalize'
+require 'seo_meta'
 
 module Refinery
   autoload :BlogGenerator, 'generators/refinery/blog/blog_generator'
