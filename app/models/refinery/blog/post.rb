@@ -67,8 +67,8 @@ module Refinery
       end
 
       # Delegate SEO Attributes to globalize translation
-      seo_fields = ::SeoMeta.attributes.keys.map {|a| [a, :"#{a}="]}.flatten
-      delegate(*(seo_fields << {:to => :translation}))
+      seo_fields = ::SeoMeta.attributes.keys.map { |a| [a, :"#{a}="] }.flatten
+      delegate(*seo_fields, to: :translation)
 
       self.per_page = Refinery::Blog.posts_per_page
 
